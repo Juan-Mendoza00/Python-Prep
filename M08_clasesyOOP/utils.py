@@ -1,6 +1,14 @@
 class Utils:
-    def __init__(self, lista):
-        self.lista = lista
+    def __init__(self, lista): 
+        '''
+        Ahora se verifica que al momento de crear el objeto se pase una lista como parametro.
+        De no ser así entonces que salte un error.
+        '''
+        if type(lista) != list:
+            self.lista = None
+            raise ValueError('Se espera una lista como parámetro de entrada.')
+        else:
+            self.lista = lista
 
     def __primo(self, n):
         for i in range(2,n):
@@ -40,7 +48,7 @@ class Utils:
         else:
             result = 'Parámetro de origen o destino no permitido.'
         
-        return f'{value} grados {scale} son {result} grados {transform_to}'
+        return result #f'{value} grados {scale} son {result} grados {transform_to}'
     
     def __factorial(self, n):
         if n > 1 and type(n) == int:
@@ -48,16 +56,21 @@ class Utils:
         return n
     
     def factorial(self):
-        for i in self.lista:
-            print(self.__factorial(i))
+        lista_factoriales = [self.__factorial(i) for i in self.lista]
+        return lista_factoriales
 
     def convert_degrees(self, scale, descale):
-        for i in self.lista:
-            print(self.__convert_degrees(i,scale,descale))
+        if scale not in ['celsius', 'farenheit', 'kelvin']:
+            print(scale, 'no está dentro de los parámetros esperados.')
+            print('Los parámetros esperados son:', ['celsius', 'farenheit', 'kelvin'])
+            return []
+        if descale not in ['celsius', 'farenheit', 'kelvin']:
+            print(descale, 'no está dentro de los parámetros esperados.')
+            print('Los parámetros esperados son:', ['celsius', 'farenheit', 'kelvin'])
+            return []
+        cambio = [self.__convert_degrees(value, scale, descale) for value in self.lista]
+        return cambio
 
     def is_prime(self):
-        for i in self.lista:
-            if self.__primo(i):
-                print('Primo')
-            else:
-                print('No Primo')
+        lista_primos = [self.__primo(numero) for numero in self.lista]
+        return lista_primos
